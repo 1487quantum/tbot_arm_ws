@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+    - Base      : kobuki
+    - Stacks    : hexagons
+    - 3d Sensor : kinect
+-->
+<robot name="turtlebot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find turtlebot_description)/urdf/turtlebot_common_library.urdf.xacro" />
+  <xacro:include filename="$(find kobuki_description)/urdf/kobuki.urdf.xacro" />
+  <xacro:include filename="$(find turtlebot_description)/urdf/stacks/hexagons.urdf.xacro"/>
+  <xacro:include filename="$(find turtlebot_description)/urdf/sensors/asus_xtion_pro.urdf.xacro"/>
+
+  <kobuki/>
+  <stack_hexagons                 parent="base_link"/>
+  <sensor_asus_xtion_pro          parent="base_link"/>
+
+  <!-- Added the arm here -->
+  <xacro:include filename="$(find poke_description)/urdf/poke.xacro" />
+  <poke_arm parent="plate_top_link" color="white" joints_vlimit="1.571">
+    <!-- Place the "floating" arm at the location it should be if mounted on a turtlebot -->
+    <origin xyz="-0.05 0 0"/>
+  </poke_arm>
+
+</robot>
