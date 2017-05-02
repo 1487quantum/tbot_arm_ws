@@ -1,2 +1,2 @@
-#A control - Turtlebot + Arm controller
-This package includes launch files to launch both the tutrlebot and the arm together.
+##Actrl - Turtlebot + Arm controller
+This package includes launch files to launch both the turtlebot and the arm together in Gazebo.
