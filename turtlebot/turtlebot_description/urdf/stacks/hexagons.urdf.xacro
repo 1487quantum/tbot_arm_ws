@@ -160,7 +160,7 @@
       <inertial>
         <!-- Modified mass here -->
         <!--mass value="0.520" /-->
-        <mass value="5.520" />
+        <mass value="0.52" />
         <origin xyz="0 0 0" />
         <inertia ixx="0.003328" ixy="0.0" ixz="0.0"
                  iyy="0.003328" iyz="0.0"
@@ -194,7 +194,7 @@
       <inertial>
       <!-- Modify mass here -->
       <!--mass value="0.520" /-->
-        <mass value="5.520" />
+        <mass value="0.520" />
         <origin xyz="0 0 0" />
         <inertia ixx="0.003328" ixy="0.0" ixz="0.0"
                  iyy="0.003328" iyz="0.0"
@@ -230,7 +230,7 @@
       <inertial>
       <!-- Modify mass here -->
       <!--mass value="0.520" /-->
-        <mass value="5.520"/>
+        <mass value="0.52"/>
         <origin xyz="0 0 0"/>
         <inertia ixx="0.003328" ixy="0.0" ixz="0.0"
                  iyy="0.003328" iyz="0.0"
