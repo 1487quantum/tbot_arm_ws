@@ -1,5 +1,5 @@
 # tbot_arm_ws
-Packages used to test out an arm model on turtlebot.
+Packages used to test out the *Poke Arm* model on turtlebot. (Includes the modified *turtlebot_description* file)
 
 ## Dependancies
 This workspace requires the *turtlebot_simulator* to be installed.
