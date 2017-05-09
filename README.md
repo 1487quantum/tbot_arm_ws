@@ -1,4 +1,4 @@
-# tbotArm_ws
+# tbot_arm_ws
 Packages used to test out an arm model on turtlebot.
 
 ## Dependancies
@@ -10,7 +10,7 @@ $ sudo apt-get install ros-indigo-turtlebot-simulator
 ## Usage
 Git clone this repository into an existing workspace or create another workspace.
 ```
-$ git clone https://github.com/1487quantum/tbot_ws.git
+$ git clone https://github.com/1487quantum/tbot_arm_ws.git
 ```
 After that, git clone the *poke-arm-gazebo* repo. This contains the arm model and the controls.
 ```
