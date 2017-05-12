@@ -20,3 +20,13 @@ To launch the turtlebot & arm in Gazebo, roslaunch *turtlebot_world.launch* in t
 ```
 $ roslaunch actrl turtlebot_world.launch
 ```
+
+## Turtlebot Arm Control Dashboard
+Similar to Turtlebot *keyboard_teleop*, the *Turtlebot Arm Control Dashboard* is a simple control dasboard to allow one to control both the arm and turtlebot all in one *keyboard_teleop*. (Written in Python2.7) To use the dashboard,
+```
+$ rosrun actrl mainControl
+```
+OR
+```
+$ python mainControl.py
+```
