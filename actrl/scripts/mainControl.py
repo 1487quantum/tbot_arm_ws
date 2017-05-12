@@ -20,14 +20,15 @@ imgTop = []
 imgBot = []
 
 msg = """
-~ Turtlebot Arm Control Dashboard v0.1.0 ~
-    [ Reading from the keyboard! ]
----------------------------------------------
-Arm positions:           Speed:
-z - Ready                q - Decrease Speed
-x - Steady               e - Increase Speed
-c - Extend
----------------------------------------------
+         ~ Turtlebot Arm Control Dashboard v0.1.1 ~
+               [ Reading from the keyboard! ]
+------------------------------------------------------------
+Arm positions:      Motion:              Speed:
+z - Ready           w - Forward          q - Decrease Speed
+x - Steady          s - Backward         e - Increase Speed
+c - Extend          a - Rotate Left
+                    d - Rotate Right
+------------------------------------------------------------
 
 CTRL-C to quit
 """
