@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <!-- We use a custom world so that the camera angle is launched correctly -->
+
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- North -->
+    <include>
+      <uri>model://ball1</uri>
+      <pose>3.00 0.00 0.5 0.000000 1.5708 0.0</pose>
+    </include>
+
+    <!-- West -->
+    <include>
+      <uri>model://ball6</uri>
+      <pose>0.00 -3.00 0.5 0.0 1.5708 -1.5708</pose>
+    </include>
+
+    <!-- South -->
+    <include>
+      <uri>model://ball8</uri>
+      <pose>-3.00 0.00 0.5 0.0 1.5708 3.142</pose>
+    </include>
+
+    <!-- East -->
+    <include>
+      <uri>model://ball2</uri>
+      <pose>0.00 3.00 0.5 0.0 1.5708 1.5708</pose>
+    </include>
+
+    <!-- Focus camera on tall pendulum -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>
