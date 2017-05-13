@@ -40,10 +40,10 @@ posBindings = {
 }
 
 moveBindings = {
-		'w':(dSpeed,0),
-		'a':(0,dSpeed),
-		'd':(0,-dSpeed),
-		's':(-dSpeed,0),
+		'w':(1,0),
+		'a':(0,1),
+		'd':(0,-1),
+		's':(-1,0),
         'q':('d',0),
         'e':('u',0)
 	       }
@@ -107,8 +107,12 @@ def setPos(rbtGrp,key):
 def setMotion(key):
     global dSpeed
     if moveBindings[key][0] == 'd':
-        dSpeed -= incF
-        print "Speed:",dSpeed
+        if dSpeed <= incF:
+            dSpeed = incF
+            print "Speed at min!",dSpeed
+        else:
+            dSpeed -= incF
+            print "Speed:",dSpeed
     elif moveBindings[key][0] == 'u':
         dSpeed += incF
         print "Speed:",dSpeed
@@ -116,8 +120,8 @@ def setMotion(key):
         for j in range(0,len(moveBindings[key])):
             mCmd[j] = moveBindings[key][j]
             twist = Twist()
-            twist.linear.x = mCmd[0]; twist.linear.y = 0; twist.linear.z =0;
-            twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = mCmd[1]
+            twist.linear.x = mCmd[0]*dSpeed; twist.linear.y = 0; twist.linear.z =0;
+            twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = mCmd[1]*dSpeed
             pub.publish(twist)
 
 if __name__=="__main__":
