@@ -16,9 +16,15 @@ After that, git clone the *poke-arm-gazebo* repo. This contains the arm model an
 ```
 $ git clone https://github.com/1487quantum/poke-arm-gazebo.git
 ```
-To launch the turtlebot & arm in Gazebo, roslaunch *turtlebot_world.launch* in the *actrl/launch* directory.
+
+## Launching the world
+To launch the turtlebot & arm in Gazebo with the dafault world, roslaunch *turtlebot_world.launch* in the *actrl/launch* directory.
 ```
 $ roslaunch actrl turtlebot_world.launch
+```
+To launch the world with the MNIST Spheres, simply roslaunch the *turtlebot_arm_world.launch* file with the following parameters:
+```
+$ roslaunch actrl turtlebot_arm_world.launch world_file:=$(find actrl)/worlds/fixed.world
 ```
 
 ## Turtlebot Arm Control Dashboard
@@ -30,3 +36,6 @@ OR
 ```
 $ python mainControl.py
 ```
+
+## Changing the MNIST Number on the Sphere
+To change the MNIST number on the sphere, open up the *.world* file and search for the the URI link with *ballN*, where *N* is the digit. Change *N* to whatever digit you want (0-9) and launch the file. (No need to recompile the file!)
