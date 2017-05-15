@@ -24,7 +24,7 @@ $ roslaunch actrl turtlebot_world.launch
 ```
 To launch the world with the MNIST Spheres, simply roslaunch the *turtlebot_arm_world.launch* file with the following parameters:
 ```
-$ roslaunch actrl turtlebot_arm_world.launch world_file:=$(find actrl)/worlds/fixed.world
+$ roslaunch actrl turtlebot_arm_world.launch world_file:=$(roscd actrl)/worlds/fixed.world
 ```
 
 ## Turtlebot Arm Control Dashboard
