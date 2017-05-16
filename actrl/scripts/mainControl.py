@@ -10,6 +10,10 @@ from geometry_msgs.msg import Twist #cmd_vel
 import moveit_commander
 import moveit_msgs.msg
 
+import cv2
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge, CvBridgeError
+
 robot = ""
 groupArm = ""
 dSpeed = 0.2            #Default Speed
@@ -28,6 +32,9 @@ z - Ready           w - Forward          q - Decrease Speed
 x - Steady          s - Backward         e - Increase Speed
 c - Extend          a - Rotate Left
                     d - Rotate Right
+
+Actions:
+v - Prod
 ------------------------------------------------------------
 
 CTRL-C to quit
@@ -36,7 +43,8 @@ CTRL-C to quit
 posBindings = {
         'z':(-1.0,2.0,0.6),
         'x':(0.6,2.0,-1.05),
-        'c':(1.5,0.2,-0.2)
+        'c':(1.5,0.2,-0.2),
+        'v':(0.0,0.0,0.0)
 }
 
 moveBindings = {
@@ -47,6 +55,8 @@ moveBindings = {
         'q':('d',0),
         'e':('u',0)
 	       }
+
+client = ""
 
 def initMoveit():
     global robot, groupArm
@@ -93,18 +103,20 @@ def processPos(jval):
     else:
         return "Unknown"
 
-
 def setPos(rbtGrp,key):
-    ga = getCurPos(rbtGrp)
-    for j in range(0,len(posBindings[key])):
-        ga[j] = posBindings[key][j]
-    rbtGrp.set_joint_value_target(ga)
-    print "Setting to Position", processPos(ga)
-    plan1 = rbtGrp.plan()                 #Plan
-    rbtGrp.execute(plan1)                 #execute
-    rospy.sleep(1)                        #Gimme a break
+    if key == 'v':
+        prod()
+    else:
+        cp = getCurPos(rbtGrp)
+        for j in range(0,len(posBindings[key])):
+            cp[j] = posBindings[key][j]
+        rbtGrp.set_joint_value_target(cp)
+        print "Setting to Position", processPos(cp)
+        plan1 = rbtGrp.plan()                 #Plan
+        rbtGrp.execute(plan1)                 #execute
+        rospy.sleep(1)                        #Gimme a break
 
-def setMotion(key):
+def processMotion(key):
     global dSpeed
     if moveBindings[key][0] == 'd':
         if dSpeed <= incF:
@@ -119,32 +131,72 @@ def setMotion(key):
     else:
         for j in range(0,len(moveBindings[key])):
             mCmd[j] = moveBindings[key][j]
-            twist = Twist()
-            twist.linear.x = mCmd[0]*dSpeed; twist.linear.y = 0; twist.linear.z =0;
-            twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = mCmd[1]*dSpeed
-            pub.publish(twist)
+            setTwist(mCmd[0]*dSpeed,0,0,0,0,mCmd[1]*dSpeed)
+
+
+def setTwist(lx,ly,lz,ax,ay,az):
+    twist = Twist()
+    twist.linear.x = lx
+    twist.linear.y = ly
+    twist.linear.z = lz
+    twist.angular.x = ax
+    twist.angular.y = ay
+    twist.angular.z = az
+    pub.publish(twist)
+
+def image_callback(msg):
+    bridge = CvBridge()
+    try:
+        img = bridge.imgmsg_to_cv2(msg)
+        (rows,cols,channels) = img.shape
+
+    except CvBridgeError as e:
+          print(e)
+
+    if cols > 60 and rows > 60 :
+      offsetY = 10         #Offset from horizon
+      cirRadiusRange = 12   #Range of acceptable center coordinate
+      #Create guide overlay
+      #Src, loc(x,y), radius, color (bgr), thickness
+      #cv2.circle(cv_image, (self.cols/2, self.rows/2-offsetY), cirRadiusRange, 255)
+      cv2.line(img, (cols/2, rows/2-rows/3), (cols/2, rows/2+rows/3),255)
+      cv2.line(img, (cols/2-cirRadiusRange, rows/2-rows/4), (cols/2-cirRadiusRange, rows/2+rows/4),255)
+      cv2.line(img, (cols/2+cirRadiusRange, rows/2-rows/4), (cols/2+cirRadiusRange, rows/2+rows/4),255)
+
+    cv2.imshow("camTop", img)
+    cv2.waitKey(3)
+
+def prod():
+    setPos(groupArm, posBindings.keys()[2])
+    setPos(groupArm, posBindings.keys()[1])
+    setPos(groupArm, posBindings.keys()[2])
+    print "don3"
 
 if __name__=="__main__":
-    global mCmd
+    global mCmd, poseName
     settings = termios.tcgetattr(sys.stdin)
 
     pub = rospy.Publisher('/cmd_vel_mux/input/teleop', Twist, queue_size = 1)
+    image_sub = rospy.Subscriber('cameraB/rgb/image_raw', Image, image_callback)
     rospy.init_node('mainControl')
 
     initMoveit()
+    setPos(groupArm, posBindings.keys()[0])
 
     try:
         print msg
         #print "Current position:" , getCurPos(groupArm)
         print "Current position:" ,processPos(getCurPos(groupArm))
         print "Speed:",dSpeed
+
+        print "==== Ready for input ==== "
         while(1):
             key = getKey()
             if key in posBindings.keys():
-                setPos(groupArm, key )
+                setPos(groupArm, key)
 
             elif key in moveBindings.keys():
-                setMotion(key)
+                processMotion(key)
 
             else:
                 if (key == '\x03'):
@@ -155,9 +207,6 @@ if __name__=="__main__":
     	print e
 
     finally:
-    	twist = Twist()
-    	twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
-    	twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
-    	pub.publish(twist)
+    	setTwist(0,0,0,0,0,0)
 
 termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
