@@ -39,3 +39,7 @@ $ python mainControl.py
 
 ## Changing the MNIST Number on the Sphere
 To change the MNIST number on the sphere, open up the *.world* file and search for the the URI link with *ballN*, where *N* is the digit. Change *N* to whatever digit you want (0-9) and launch the file. (No need to recompile the file!)
+
+## Tensorflow
+Follow the instructions here: (For our case, we are using tensorflow with GPU)
+- https://www.tensorflow.org/install/install_linux
