@@ -46,4 +46,20 @@
 
   <include file="$(find poke_moveit_config)/launch/move_group.launch"/>
 
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_cameraB" args="0 0 0 1.570796 3.1415927 1.570796 cameraB_cam cameraB_depth_optical_frame 100" />
+
+  <!-- IMage view
+  <node name="image_view_top" pkg="image_view" type="image_view"
+   respawn="false" output="screen">
+   <remap from="image" to="cameraB/rgb/image_raw"/>
+   <param name="autosize" value="false" />
+   </node>
+   -->
+
+   <node name="image_view_bottom" pkg="image_view" type="image_view"
+    respawn="false" output="screen">
+    <remap from="image" to="camera/rgb/image_raw"/>
+    <param name="autosize" value="false" />
+    </node>
+
 </launch>
