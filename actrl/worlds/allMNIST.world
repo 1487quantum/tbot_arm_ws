@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <!-- We use a custom world so that the camera angle is launched correctly -->
+
+  <world name="default">
+  <physics type='ode'>
+    <max_step_size>0.01</max_step_size>
+    <real_time_factor>1</real_time_factor>
+    <real_time_update_rate>100</real_time_update_rate>
+    <gravity>0 0 -9.8</gravity>
+  </physics>
+
+    <include>
+      <uri>model://ground_plane</uri>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+      </link>
+    </include>
+
+    <!-- Global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- All the digits -->
+    <include>
+      <uri>model://ball9</uri>
+      <pose>0.0 -3.00 0.5 0.0 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball0</uri>
+      <pose>2.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball1</uri>
+      <pose>4.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball2</uri>
+      <pose>6.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball3</uri>
+      <pose>8.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball4</uri>
+      <pose>10.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball5</uri>
+      <pose>12.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball6</uri>
+      <pose>14.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball7</uri>
+      <pose>16.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball8</uri>
+      <pose>18.0 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+    <include>
+      <uri>model://ball9</uri>
+      <pose>20.00 -3.00 0.5 1.5708 0.0 0.0</pose>
+    </include>
+
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>
